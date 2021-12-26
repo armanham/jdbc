@@ -1,0 +1,47 @@
+CREATE TABLE IF NOT EXISTS userss(
+	id BIGINT,
+	name VARCHAR(32) NOT NULL,
+	surname VARCHAR(64) NOT NULL,
+	age NUMERIC(3) NOT NULL,
+	email VARCHAR(64) NOT NULL,
+	created_on TIMESTAMP NOT NULL,
+	active_on BOOLEAN NOT NULL,
+	PRIMARY KEY(id)
+);
+
+CREATE TABLE IF NOT EXISTS addressess(
+	id BIGINT,
+	country VARCHAR(64) NOT NULL,
+	city VARCHAR(64) NOT NULL,
+	PRIMARY KEY (id)
+);
+
+CREATE TABLE IF NOT EXISTS user_address(
+	id BIGINT,
+	user_id BIGINT NOT NULL,
+	address_id BIGINT NOT NULL,
+	PRIMARY KEY(id)
+);
+
+ALTER TABLE user_address ADD CONSTRAINT FK_user_address_user_id FOREIGN KEY(user_id) REFERENCES userss;
+ALTER TABLE user_address ADD CONSTRAINT FK_user_address_address_id FOREIGN KEY(address_id) REFERENCES addressess;
+
+INSERT INTO userss(id, name, surname, age, email, created_on, active_on)
+	VALUES(4, 'Xachik', 'Columbus', 45, 'cul@mail.ru', NOW(), TRUE);
+
+INSERT INTO addressess(id, country, city)
+	VALUES(1, 'Armenia', 'Yerevan'),
+	      (2, 'USA', 'New York'),
+		  (3, 'France', 'Paris');
+
+INSERT INTO user_address(id, user_id, address_id)
+	VALUES(1, 1, 1),
+		  (2, 2, 2),
+		  (3, 3, 3);
+
+select * from userss inner join user_address on userss.id = user_address.user_id;
+select * from addressess inner join user_address on addressess.id = user_address.address_id;
+select * from userss inner join addressess on userss.id = addressess.id;
+
+
+

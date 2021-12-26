@@ -1,0 +1,3 @@
+user=postgres
+password=ajk2232
+url=jdbc:postgresql://localhost:5432/postgres
